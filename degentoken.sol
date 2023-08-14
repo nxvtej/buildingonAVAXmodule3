@@ -26,7 +26,10 @@ contract DEGENTOKEN is ERC20 {
         return true;
     }
 
-    function redeemTokens(uint256 amount) public {
+        
+    function redeem(uint256 amount) public {
+        require(balanceOf(msg.sender) >= amount, "Insufficient balance");
+        // during game if some address is provided then tokens will be redeemed via this 
         _burn(msg.sender, amount);
     }
 

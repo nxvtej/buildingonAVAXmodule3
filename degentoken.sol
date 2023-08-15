@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -26,12 +25,18 @@ contract DEGENTOKEN is ERC20 {
         return true;
     }
 
+     function redeemTokens(uint256 amount) public {
+        uint256 requiredAmount = amount * 10;
+        require(balanceOf(msg.sender) >= requiredAmount, "Insufficient Amount");
         
-    function redeem(uint256 amount) public {
-        require(balanceOf(msg.sender) >= amount, "Insufficient balance");
-        // during game if some address is provided then tokens will be redeemed via this 
-        _burn(msg.sender, amount);
+        // Call the burn function to burn tokens
+        _burn(msg.sender, requiredAmount);
+        
+        emit RedeemTokens(msg.sender, requiredAmount);
     }
+    
+    event RedeemTokens(address indexed user, uint256 amount);
+   
 
     function checkAccountBalance(address account) public view returns (uint256) {
         return balanceOf(account);
